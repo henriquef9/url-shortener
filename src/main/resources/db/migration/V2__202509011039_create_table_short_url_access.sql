@@ -1,0 +1,10 @@
+
+CREATE TABLE short_url_access (
+
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    access_date DATE NOT NULL,
+    access_count BIGINT NOT NULL DEFAULT 0,
+    short_url_id BIGINT NOT NULL,
+    CONSTRAINT fk_short_url FOREIGN KEY (short_url_id) REFERENCES short_urls(id) ON DELETE CASCADE
+
+)
