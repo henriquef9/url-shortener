@@ -149,4 +149,4 @@ A documentação da API pode ser acessada em: [Documentação do Swagger](http:/
 Projeto desenvolvido para fins de aprendizado em Java, Spring Boot e AWS.
 
 Este projeto está licenciado sob a licença MIT. Consulte o
-arquivo <a href="">(LICENSE)</a> para obter.
+arquivo <a href="https://github.com/henriquef9/url-shortener/blob/main/LICENSE">(LICENSE)</a> para obter.
