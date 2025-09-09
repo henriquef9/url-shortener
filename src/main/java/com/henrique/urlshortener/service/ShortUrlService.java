@@ -2,6 +2,7 @@ package com.henrique.urlshortener.service;
 
 import com.henrique.urlshortener.dto.ShortUrlStatisticsDTO;
 import com.henrique.urlshortener.exception.NotFoundEntityException;
+import com.henrique.urlshortener.exception.ShortUrlExpiredException;
 import com.henrique.urlshortener.model.ShortUrl;
 import com.henrique.urlshortener.model.ShortUrlAccess;
 import com.henrique.urlshortener.repository.ShortUrlRepository;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.time.LocalDate;
+import java.time.*;
 import java.util.*;
 
 @Service
@@ -28,6 +29,7 @@ public class ShortUrlService {
 
     public ShortUrl create(String originalUrl) {
 
+
         String shortCode = generateCode(originalUrl);
 
         ShortUrl entity = new ShortUrl();
@@ -39,11 +41,22 @@ public class ShortUrlService {
 
     }
 
+    public ShortUrl update(ShortUrl entity) {
+
+        return shortUrlRepository.save(entity);
+
+    }
+
+
     public ShortUrl findByShortCode(String shortCode) throws NotFoundEntityException {
 
         ShortUrl shortUrlEntity = shortUrlRepository.findByShortCode(shortCode).orElseThrow(() -> new NotFoundEntityException("URL short not found"));
 
         Optional<ShortUrlAccess> shortUrlAccess = shortUrlAccessService.getAccessByDateAndShortUrlId(LocalDate.now(), shortUrlEntity.getId());
+
+        if(OffsetDateTime.now().isAfter(shortUrlEntity.getExpiresAt())) {
+            throw new ShortUrlExpiredException("URL expired day: " + shortUrlEntity.getExpiresAt());
+        }
 
         ShortUrlAccess accessEntity;
         if(shortUrlAccess.isPresent()) {
@@ -98,6 +111,21 @@ public class ShortUrlService {
                 lastDate
         );
 
+
+    }
+
+    public List<ShortUrl> findByExpiredToday(){
+
+        OffsetDateTime start = OffsetDateTime.of(LocalDate.now(), LocalTime.of(0,0,0), ZoneOffset.UTC);
+        OffsetDateTime end = OffsetDateTime.of(LocalDate.now(), LocalTime.of(23,59,59), ZoneOffset.UTC);
+
+        return shortUrlRepository.findShortUrlByExpiresAtBetween(start, end);
+
+    }
+
+    public void deleteByExpiredToday(){
+
+        this.shortUrlRepository.deleteByExpiresAtBefore(OffsetDateTime.of(LocalDate.now(), LocalTime.of(23,59,59), ZoneOffset.UTC));
 
     }
 

@@ -24,6 +24,18 @@ public class RestExceptionHandler {
 
     }
 
+    @ExceptionHandler(ShortUrlExpiredException.class)
+    public ResponseEntity<HttpError> handleShortUrlExpiredException(ShortUrlExpiredException e) {
+        HttpError error = new HttpError(
+                HttpStatus.FORBIDDEN.value(),
+                e.getMessage(),
+                LocalDateTime.now()
+        );
+
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
+    }
+
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<HttpError> handleGenericException(Exception ex) {
         HttpError error = new HttpError(
