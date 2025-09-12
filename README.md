@@ -2,8 +2,8 @@
 
 ## 📖 Descrição
 Este projeto é um Encurtador de URLs desenvolvido em Spring Boot (Java 21). A ideia é simples: pegar uma URL muito grande e criar um link curto, que redireciona para a URL original.
-
 Ele já tem algumas funcionalidades importantes, como a persistência dos dados, limpeza de links expirados e estatísticas de acesso diário.
+
 ---
 
 ## 🛠️ Tecnologias (Dev)
