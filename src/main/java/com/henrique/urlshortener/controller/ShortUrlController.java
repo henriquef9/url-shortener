@@ -1,6 +1,7 @@
 package com.henrique.urlshortener.controller;
 
 
+import com.henrique.urlshortener.dto.ShortUrlCreateDTO;
 import com.henrique.urlshortener.dto.ShortUrlStatisticsDTO;
 import com.henrique.urlshortener.model.ShortUrl;
 import com.henrique.urlshortener.service.ShortUrlService;
@@ -28,8 +29,15 @@ public class ShortUrlController {
     }
 
     @PostMapping()
-    public ResponseEntity<ShortUrl> shortUrl(@RequestParam(value = "originalUrl") String originalUrl) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(shortUrlService.create(originalUrl));
+    public ResponseEntity<ShortUrlCreateDTO> shortUrl(@RequestParam(value = "originalUrl") String originalUrl) {
+        ShortUrl entity = shortUrlService.create(originalUrl);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ShortUrlCreateDTO(
+                entity.getId(),
+                entity.getOriginalUrl(),
+                entity.getShortCode(),
+                entity.getCreatedAt(),
+                entity.getExpiresAt()
+        ));
     }
 
     @GetMapping("/stats/{code}")
