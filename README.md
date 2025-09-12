@@ -1,20 +1,18 @@
 # 📌 API Rest - Encurtador de URL com Spring Framework (Java)
 
 ## 📖 Descrição
-Este projeto implementa um **encurtador de URLs** com **Spring Boot (Java 21)**.  
-O sistema recebe uma URL através de uma requisição **REST**, gera um **código curto** correspondente e disponibiliza um endpoint para redirecionamento.  
-
-Também foi implementado um endpoint que retorna as **estatísticas de acessos diários** aos links curtos.  
+Este projeto é um Encurtador de URLs desenvolvido em Spring Boot (Java 21). A ideia é simples: pegar uma URL muito grande e criar um link curto, que redireciona para a URL original.
+Ele já tem algumas funcionalidades importantes, como a persistência dos dados, limpeza de links expirados e estatísticas de acesso diário.
 
 ---
 
-## 🛠️ Tecnologias (Dev)
+## 🛠️ Tecnologias 
  - ☕ Java 21
  - 🍃 Spring Boot 3
  - 🗄 Spring Data JPA
  - 🔀 Flyway (migrations)
  - 🧪 H2 Database (desenvolvimento)
- - 🐬 MySQL (produção)
+ - 🐘 Postgres (produção)
  - 📑 Swagger / OpenAPI (documentação da API)
  - 📦 Maven
 
@@ -23,7 +21,8 @@ Também foi implementado um endpoint que retorna as **estatísticas de acessos d
 ## ⚙️ Funcionalidades
 - [x] Criar um link encurtado a partir de uma URL original.  
 - [x] Redirecionar usuários para a URL original via código curto.  
-- [ ] Expiração de links de baixo acesso (até 7 dias).  
+- [x] Expiração de links de baixo acesso (até 7 dias).
+- [x] Renovação do prazo de expiração dos links.
 - [x] Estatísticas de acessos diários.  
 - [ ] Autenticação e gestão de usuários (futuro).  
 
