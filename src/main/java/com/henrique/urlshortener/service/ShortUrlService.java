@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Service
@@ -55,7 +56,7 @@ public class ShortUrlService {
         Optional<ShortUrlAccess> shortUrlAccess = shortUrlAccessService.getAccessByDateAndShortUrlId(LocalDate.now(), shortUrlEntity.getId());
 
         if(OffsetDateTime.now().isAfter(shortUrlEntity.getExpiresAt())) {
-            throw new ShortUrlExpiredException("URL expired day: " + shortUrlEntity.getExpiresAt());
+            throw new ShortUrlExpiredException("URL expired day: " + shortUrlEntity.getExpiresAt().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")));
         }
 
         ShortUrlAccess accessEntity;
@@ -161,8 +162,6 @@ public class ShortUrlService {
 
             MessageDigest algorithm = MessageDigest.getInstance("SHA-256");
             byte[] hashBytes = algorithm.digest(originalUrl.getBytes());
-
-            StringBuilder hexString = new StringBuilder();
 
             return HexFormat.of().formatHex(hashBytes);
 
