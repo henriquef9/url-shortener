@@ -6,13 +6,13 @@ Ele já tem algumas funcionalidades importantes, como a persistência dos dados,
 
 ---
 
-## 🛠️ Tecnologias (Dev)
+## 🛠️ Tecnologias 
  - ☕ Java 21
  - 🍃 Spring Boot 3
  - 🗄 Spring Data JPA
  - 🔀 Flyway (migrations)
  - 🧪 H2 Database (desenvolvimento)
- - 🐬 MySQL (produção)
+ - 🐘 Postgres (produção)
  - 📑 Swagger / OpenAPI (documentação da API)
  - 📦 Maven
 
